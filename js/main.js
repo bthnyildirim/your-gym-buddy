@@ -1,32 +1,38 @@
 class Player {
   constructor() {
-    this.positionY = 0;
-    this.positionX = 0;
-    this.width = 20;
-    this.height = 20;
+    this.positionY = 20;
+    this.positionX = 20;
+    this.width = 40;
+    this.height = 40;
 
-    const domElement = document.createElement("div");
-    domElement.id = "player";
-    domElement.style.width = this.width + "px";
-    domElement.style.height = this.height + "px";
-    domElement.style.left = this.positionX + "px";
-    domElement.style.bottom = this.positionY + "px";
+    this.domElement = document.createElement("div");
+    this.domElement.id = "player";
+    this.domElement.style.width = this.width + "px";
+    this.domElement.style.height = this.height + "px";
+    this.domElement.style.left = this.positionX + "px";
+    this.domElement.style.bottom = this.positionY + "px";
 
     const board = document.getElementById("board");
-    board.appendChild(domElement);
+    board.appendChild(this.domElement);
   }
 
   moveLeft() {
-    this.positionY--;
-    domElement.style.bottom = this.positionY + "px";
+    this.positionX--;
+    this.domElement.style.left = this.positionX + "px";
   }
 
   moveRight() {
     this.positionX++;
-    domElement.style.left = this.positionX + "px";
+    this.domElement.style.left = this.positionX + "px";
   }
 }
 const player = new Player();
 player.moveLeft();
-player.moveLeft();
-player.moveLeft();
+player.moveRight();
+document.addEventListener("keydown", (action) => {
+  if (action.code === "ArrowLeft") {
+    player.moveLeft();
+  } else if (action.code === "ArrowRight") {
+    player.moveRight();
+  }
+});
