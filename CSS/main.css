@@ -17,10 +17,21 @@ body {
 #board {
   height: 100vh;
   width: 100vw;
+  background-image: url("../pictures/background-image.JPG");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
 }
 
 #player {
+  background-color: brown;
+  position: absolute;
+  bottom: 0;
+  left: 0px;
+}
+
+#Obstacle1 {
   background-color: brown;
   position: absolute;
   bottom: 0;
