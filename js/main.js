@@ -2,8 +2,8 @@ class Player {
   constructor() {
     this.positionY = 0;
     this.positionX = 0;
-    this.width = 40;
-    this.height = 40;
+    this.width = 80;
+    this.height = 80;
 
     this.domElement = document.createElement("div");
     this.domElement.id = "player";
@@ -14,6 +14,13 @@ class Player {
 
     const board = document.getElementById("board");
     board.appendChild(this.domElement);
+
+    // Replace the player div background with the player image
+    const playerImg = document.createElement("img");
+    playerImg.src = "./pictures/player-picture.png";
+    playerImg.style.width = "100px";
+    playerImg.style.height = "auto";
+    this.domElement.appendChild(playerImg);
   }
 
   moveLeft() {
@@ -45,6 +52,13 @@ class Obstacle1 {
     this.domElement.style.left = this.positionX + "px";
     this.domElement.style.bottom = this.positionY + "px";
     this.domElement.style.position = "absolute";
+
+    // Replace the obstacle background with the dumbbell image
+    const dumbellImg = document.createElement("img");
+    dumbellImg.src = "./pictures/dumbell-picture.png";
+    dumbellImg.style.width = "40px";
+    dumbellImg.style.height = "auto";
+    this.domElement.appendChild(dumbellImg);
 
     const board = document.getElementById("board");
     board.appendChild(this.domElement);
