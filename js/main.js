@@ -24,13 +24,21 @@ class Player {
   }
 
   moveLeft() {
-    this.positionX -= 20;
-    this.domElement.style.left = this.positionX + "px";
+    if (this.positionX > 0) {
+      this.positionX -= 20;
+      this.domElement.style.left = this.positionX + "px";
+    }
   }
 
   moveRight() {
-    this.positionX += 20;
-    this.domElement.style.left = this.positionX + "px";
+    const board = document.getElementById("board");
+    const boardWidth = board.clientWidth;
+    const characterRightEdge = this.positionX + this.domElement.offsetWidth;
+
+    if (characterRightEdge < boardWidth) {
+      this.positionX += 20;
+      this.domElement.style.left = this.positionX + "px";
+    }
   }
 }
 
@@ -104,7 +112,7 @@ class prize {
 
 const player = new Player();
 
-// Array to store all obstacles
+// store all obstacles
 const obstacles = [];
 const obstacleWidth = 30; // Define the width of each obstacle
 const boardWidth = 1000;
@@ -120,7 +128,7 @@ setInterval(() => {
   obstacles.forEach((obstacle, index) => {
     obstacle.moveDown();
 
-    // If the obstacle moves off the screen, remove it
+    // remove obstacle from screen
     if (obstacle.positionY < 0) {
       obstacle.domElement.remove();
       obstacles.splice(index, 1);
@@ -138,7 +146,7 @@ setInterval(() => {
   prize.forEach((prize, index) => {
     prize.moveDown();
 
-    // If the obstacle moves off the screen, remove it
+    // remove obstacle from screen
     if (prize.positionY < 0) {
       prize.domElement.remove();
       obstacles.splice(index, 2);
