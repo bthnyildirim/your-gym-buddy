@@ -36,10 +36,9 @@ class Player {
 
 class Obstacle1 {
   constructor() {
-    this.width = 40;
+    this.width = 50;
     this.positionY = 900;
-    this.positionX = 500 - this.width / 2;
-    this.width = 40;
+    this.positionX = 200 - this.width / 2;
     this.height = 20;
 
     // Generate a random positionX to place obstacles next to each other
@@ -69,16 +68,52 @@ class Obstacle1 {
   }
 }
 
+class prize {
+  constructor() {
+    this.width = 30;
+    this.positionY = 600;
+    this.positionX = 100 - this.width / 2;
+    this.height = 20;
+
+    // Generate a random positionX to place obstacles next to each other
+    this.positionX = Math.random() * (boardWidth - this.width);
+
+    this.domElement = document.createElement("div");
+    this.domElement.id = "prize";
+    this.domElement.style.width = this.width + "px";
+    this.domElement.style.height = this.height + "px";
+    this.domElement.style.left = this.positionX + "px";
+    this.domElement.style.bottom = this.positionY + "px";
+    this.domElement.style.position = "absolute";
+
+    // Replace the obstacle background with the prize image
+    const prizeImg = document.createElement("img");
+    prizeImg.src = "./pictures/prize-picture.png";
+    prizeImg.style.width = "20px";
+    prizeImg.style.height = "auto";
+    this.domElement.appendChild(prizeImg);
+
+    const board = document.getElementById("board");
+    board.appendChild(this.domElement);
+  }
+  moveDown() {
+    this.positionY -= 70;
+    this.domElement.style.bottom = this.positionY + "px";
+  }
+}
+
 const player = new Player();
 
 // Array to store all obstacles
 const obstacles = [];
-const obstacleWidth = 40; // Define the width of each obstacle
-const boardWidth = 1800;
+const obstacleWidth = 30; // Define the width of each obstacle
+const boardWidth = 1000;
+
+//-----------------timers for the obstacle-dumbell-----------------------//
 
 setInterval(() => {
-  const newObstacle = new Obstacle1(); // Create a new obstacle
-  obstacles.push(newObstacle); // Add it to the array
+  const newObstacle = new Obstacle1();
+  obstacles.push(newObstacle);
 }, 1000);
 
 setInterval(() => {
@@ -89,6 +124,24 @@ setInterval(() => {
     if (obstacle.positionY < 0) {
       obstacle.domElement.remove();
       obstacles.splice(index, 1);
+    }
+  });
+}, 200);
+
+//-----------------timers for the prize-----------------------//
+setInterval(() => {
+  const newPrize = new prize();
+  obstacles.push(newPrize);
+}, 3000);
+
+setInterval(() => {
+  prize.forEach((prize, index) => {
+    prize.moveDown();
+
+    // If the obstacle moves off the screen, remove it
+    if (prize.positionY < 0) {
+      prize.domElement.remove();
+      obstacles.splice(index, 2);
     }
   });
 }, 200);
