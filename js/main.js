@@ -111,10 +111,9 @@ class prize {
 }
 
 const player = new Player();
-
-// store all obstacles
 const obstacles = [];
-const obstacleWidth = 30; // Define the width of each obstacle
+const prizes = [];
+const obstacleWidth = 20; // Define the width of each obstacle
 const boardWidth = 1000;
 
 //-----------------timers for the obstacle-dumbell-----------------------//
@@ -129,30 +128,54 @@ setInterval(() => {
     obstacle.moveDown();
 
     // remove obstacle from screen
+    if (
+      player.positionX < obstacle.positionX + obstacle.width &&
+      player.positionX + player.width > obstacle.positionX &&
+      player.positionY < obstacle.positionY + obstacle.height &&
+      player.positionY + player.height > obstacle.positionY
+    ) {
+      console.log("Crashed");
+    }
+
+    // Remove obstacle if it moves off screen
     if (obstacle.positionY < 0) {
       obstacle.domElement.remove();
       obstacles.splice(index, 1);
     }
   });
-}, 200);
+}, 120);
 
 //-----------------timers for the prize-----------------------//
 setInterval(() => {
   const newPrize = new prize();
-  obstacles.push(newPrize);
+  prizes.push(newPrize);
 }, 3000);
 
 setInterval(() => {
-  prize.forEach((prize, index) => {
+  prizes.forEach((prize, index) => {
     prize.moveDown();
 
-    // remove obstacle from screen
+    // Check for collision (player collects prize)
+    if (
+      player.positionX < prize.positionX + prize.width &&
+      player.positionX + player.width > prize.positionX &&
+      player.positionY < prize.positionY + prize.height &&
+      player.positionY + player.height > prize.positionY
+    ) {
+      console.log("Collected prize!");
+
+      // Remove prize after collecting
+      prize.domElement.remove();
+      prizes.splice(index, 1);
+    }
+
+    // Remove prize if it moves off screen
     if (prize.positionY < 0) {
       prize.domElement.remove();
-      obstacles.splice(index, 2);
+      prizes.splice(index, 1); // Splice from the correct array (prizes)
     }
   });
-}, 200);
+}, 120);
 
 player.moveLeft();
 player.moveRight();
