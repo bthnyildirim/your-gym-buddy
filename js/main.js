@@ -2,8 +2,8 @@ class Player {
   constructor() {
     this.positionY = 0;
     this.positionX = 0;
-    this.width = 80;
-    this.height = 80;
+    this.width = 60;
+    this.height = 60;
 
     this.domElement = document.createElement("div");
     this.domElement.id = "player";
@@ -18,12 +18,15 @@ class Player {
     // Replace the player div background with the player image
     const playerImg = document.createElement("img");
     playerImg.src = "./pictures/player-picture.png";
-    playerImg.style.width = "100px";
+    playerImg.style.width = "75px";
     playerImg.style.height = "auto";
     this.domElement.appendChild(playerImg);
   }
 
   moveLeft() {
+    const board = document.getElementById("board");
+    const boardWidth = board.clientWidth;
+    const characterEdge = this.positionX + this.domElement.offsetWidth;
     if (this.positionX > 0) {
       this.positionX -= 20;
       this.domElement.style.left = this.positionX + "px";
@@ -37,6 +40,10 @@ class Player {
 
     if (characterRightEdge < boardWidth) {
       this.positionX += 20;
+
+      if (this.positionX + this.domElement.offsetWidth > boardWidth) {
+        this.positionX = boardWidth - this.domElement.offsetWidth;
+      }
       this.domElement.style.left = this.positionX + "px";
     }
   }
@@ -44,7 +51,7 @@ class Player {
 
 class Obstacle1 {
   constructor() {
-    this.width = 50;
+    this.width = 20;
     this.positionY = 900;
     this.positionX = 200 - this.width / 2;
     this.height = 20;
@@ -78,7 +85,7 @@ class Obstacle1 {
 
 class prize {
   constructor() {
-    this.width = 30;
+    this.width = 20;
     this.positionY = 600;
     this.positionX = 100 - this.width / 2;
     this.height = 20;
@@ -115,7 +122,25 @@ const obstacles = [];
 const prizes = [];
 const obstacleWidth = 20; // Define the width of each obstacle
 const boardWidth = 1000;
+//----------------ending the game once crashed----------------------------//
+let gameIntervals = [];
+function endGame() {
+  gameIntervals.forEach((interval) => clearInterval(interval));
+  window.location.href = "over.html";
+}
 
+//-----------------score counting once the prize is collected--------------//
+let score = 0;
+function updateScore() {
+  score++;
+  console.log(`Score: ${score}`);
+  localStorage.setItem("playerScore", score);
+}
+
+function gameOver() {
+  localStorage.setItem("score", score);
+  window.location.href = "over.html";
+}
 //-----------------timers for the obstacle-dumbell-----------------------//
 
 setInterval(() => {
@@ -135,6 +160,7 @@ setInterval(() => {
       player.positionY + player.height > obstacle.positionY
     ) {
       console.log("Crashed");
+      endGame();
     }
 
     // Remove obstacle if it moves off screen
@@ -155,7 +181,6 @@ setInterval(() => {
   prizes.forEach((prize, index) => {
     prize.moveDown();
 
-    // Check for collision (player collects prize)
     if (
       player.positionX < prize.positionX + prize.width &&
       player.positionX + player.width > prize.positionX &&
@@ -163,7 +188,7 @@ setInterval(() => {
       player.positionY + player.height > prize.positionY
     ) {
       console.log("Collected prize!");
-
+      updateScore();
       // Remove prize after collecting
       prize.domElement.remove();
       prizes.splice(index, 1);
@@ -172,10 +197,10 @@ setInterval(() => {
     // Remove prize if it moves off screen
     if (prize.positionY < 0) {
       prize.domElement.remove();
-      prizes.splice(index, 1); // Splice from the correct array (prizes)
+      prizes.splice(index, 1);
     }
   });
-}, 120);
+}, 15000 / 60);
 
 player.moveLeft();
 player.moveRight();
