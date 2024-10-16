@@ -1,4 +1,4 @@
-const score = localStorage.getItem("score") || 0;
+const score = localStorage.getItem("playerScore") || 0;
 
 document.getElementById("score-display").textContent = `Score: ${score}`;
 
