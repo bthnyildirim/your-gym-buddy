@@ -202,6 +202,12 @@ setInterval(() => {
   });
 }, 15000 / 60);
 
+//-----------------timer for message div-----------------------//
+const messageInternal = document.getElementById("message");
+setTimeout(function () {
+  messageInternal.style.display = "none";
+}, 3000);
+
 player.moveLeft();
 player.moveRight();
 document.addEventListener("keydown", (action) => {

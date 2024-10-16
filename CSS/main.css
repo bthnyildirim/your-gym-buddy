@@ -16,6 +16,27 @@ body {
   position: relative;
 }
 
+#message {
+  width: 400px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px;
+  font-size: 10px;
+  font-family: "Bebas Neue", sans-serif;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: 20px;
+}
+
 #player {
   background-color: transparent;
   position: absolute;
