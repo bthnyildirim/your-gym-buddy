@@ -78,7 +78,7 @@ class Obstacle1 {
     board.appendChild(this.domElement);
   }
   moveDown() {
-    this.positionY -= 25;
+    this.positionY -= 10;
     this.domElement.style.bottom = this.positionY + "px";
   }
 }
@@ -112,7 +112,7 @@ class prize {
     board.appendChild(this.domElement);
   }
   moveDown() {
-    this.positionY -= 70;
+    this.positionY -= 20;
     this.domElement.style.bottom = this.positionY + "px";
   }
 }
@@ -120,7 +120,7 @@ class prize {
 const player = new Player();
 const obstacles = [];
 const prizes = [];
-const obstacleWidth = 20; // Define the width of each obstacle
+const obstacleWidth = 20; // defining the width of each obstacle
 const boardWidth = 1000;
 //----------------ending the game once crashed----------------------------//
 let gameIntervals = [];
@@ -151,7 +151,7 @@ function gameOver() {
 setInterval(() => {
   const newObstacle = new Obstacle1();
   obstacles.push(newObstacle);
-}, 1000);
+}, 60000 / 120);
 
 setInterval(() => {
   obstacles.forEach((obstacle, index) => {
@@ -180,7 +180,7 @@ startGame();
 setInterval(() => {
   const newPrize = new prize();
   prizes.push(newPrize);
-}, 3000);
+}, 4000);
 
 setInterval(() => {
   prizes.forEach((prize, index) => {
@@ -205,7 +205,7 @@ setInterval(() => {
       prizes.splice(index, 1);
     }
   });
-}, 15000 / 60);
+}, 5000 / 60);
 
 //-----------------timer for message div-----------------------//
 const messageInternal = document.getElementById("message");
