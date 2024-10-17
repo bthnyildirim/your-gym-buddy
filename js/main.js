@@ -131,9 +131,14 @@ function endGame() {
 
 //-----------------score counting once the prize is collected--------------//
 let score = 0;
+
+function startGame() {
+  score = 0;
+  localStorage.setItem("playerScore", score);
+}
+
 function updateScore() {
   score++;
-  console.log(`Score: ${score}`);
   localStorage.setItem("playerScore", score);
 }
 
@@ -170,7 +175,7 @@ setInterval(() => {
     }
   });
 }, 120);
-
+startGame();
 //-----------------timers for the prize-----------------------//
 setInterval(() => {
   const newPrize = new prize();
