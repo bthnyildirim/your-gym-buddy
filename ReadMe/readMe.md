@@ -49,5 +49,5 @@ You need a modern web browser that supports HTML5 and JavaScript.
 1. Clone or download this repository.
 
    ```bash
-   git clone https://github.com/yourusername/dumbbell-dodge.git
+   git clone https://bthnyildirim.github.io/your-gym-buddy/
    ```
